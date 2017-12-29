@@ -90,9 +90,9 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <!--<if test="updateTime != null" >-->
         now(),
-      </if>
+      <!--</if>-->
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -107,12 +107,17 @@
   </update>
 
   <!--获取密码提示问题-->
-  <select id="getQuestion" resultType="int" parameterType="string">
+  <select id="getQuestion" resultType="int" parameterType="int">
     SELECT question_id FROM answer
-    WHERE user_id = #{phone}
+    WHERE user_id = #{user_id}
   </select>
-  <select id="getAnswer" resultType="java.lang.String" parameterType="map">
-    SELECT answer FROM answer
-    WHERE user_id = #{user_id} AND question_id = #{question_id}
+  <select id="checkAnswer" resultType="int" parameterType="map">
+    SELECT count(1) FROM answer
+    WHERE user_id = #{user_id} AND question_id = #{question_id} AND answer = #{answer}
+  </select>
+  <!--查询用户是否已经设置密码提示问题-->
+  <select id="checkSetQuestion" resultType="int" parameterType="string">
+    SELECT count(1) FROM answer
+    WHERE user_id = #{userId}
   </select>
 </mapper>

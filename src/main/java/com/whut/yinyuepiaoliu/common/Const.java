@@ -7,6 +7,8 @@ import java.util.Set;
 public class Const {
     public static final String CURRENT_USER = "currentUser";
 
+    public static final int CODE_TIME_OUT =  2;
+
     public interface ProductListOrderBy {
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_asc", "price_desc");
     }
@@ -16,9 +18,23 @@ public class Const {
         String DEFAULT_MOTTO = "暂时没有签名";
     }
 
+    public interface VerificationCodeType{
+        int REGISTER = 0;
+        int FIND_PASSWORD = 1;
+    }
+
+    public interface VerificationCodeResultType{
+        String BUSINESS_LIMIT_CONTROL = "isv.BUSINESS_LIMIT_CONTROL";
+        String OK = "OK";
+    }
+
     public interface Role {
         int ROLE_CUSTOMER = 0; // 普通用户
         int ROLE_ADMIN = 1; // 管理员
+    }
+
+    public interface ErrorType{
+        int ERROR_2 = 2;
     }
 
     public enum ProductStatusEnum {
@@ -137,6 +153,34 @@ public class Const {
         String HAS_REGISTER = "该手机号已经注册";
         String REGISTER_FAILED = "注册失败";
         String REGISTER_SUCCESS = "注册成功";
-        String NOT_SET_QUESTION = "没有设置密码问题";
+
+        String BUSINESS_LIMIT_CONTROL = "距离上一次发送验证码时间过短";
+        String SEND_CODE_SUCCESS = "发送验证码成功";
+        String SEND_CODE_FAIL = "发送验证码失败";
+        String CODE_EXPIRED = "验证码已经过期，请重新获取";
+        String CODE_ERROR = "验证码错误";
+        String CODE_SUCCESS = "验证码正确";
+
+        String NEED_TOKEN = "参数错误，需要提交token";
+        String TOKEN_EXPIRED = "token无效或者过期";
+        String TOKEN_ERROR = "token错误，请重新获取重置密码的token";
+
+        String RESET_PASSWORD_SUCCESS = "修改密码成功";
+        String RESET_PASSWORD_FAIL = "修改密码失败";
+
+        String NOT_LOGIN = "用户未登录";
+
+        String UPDATE_USER_SUCCESS = "更新个人信息成功";
+        String UPDATE_USER_FAIL = "更新个人信息失败";
+
+        String GET_USER_INFORMATION_FAIL = "找不到当前的用户信息";
+
+        String NOT_ADMIN = "不是管理员，无法登录";
+
+        String HAS_SET_QUESTION = "已经设置密码提示问题";
+        String NOT_SET_QUESTION = "没有设置密码提示问题";
+
+        String SAVE_ANSWER_FAIL = "保存密码提示问题答案失败";
+        String SAVE_ANSWER_SUCCESS = "保存密码提示问题成功";
     }
 }

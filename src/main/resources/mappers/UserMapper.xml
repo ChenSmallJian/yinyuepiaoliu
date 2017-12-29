@@ -239,9 +239,9 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <!--<if test="updateTime != null" >-->
         update_time = now(),
-      </if>
+      <!--</if>-->
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -273,11 +273,20 @@
     SELECT count(1) FROM user
     WHERE phone = #{phone}
   </select>
+  <select id="getUserId" resultType="int" parameterType="string">
+    SELECT id FROM user
+    WHERE phone = #{phone}
+  </select>
   <!--检查密码是否正确，正确则返回用户的信息-->
-  <select id="checklogin" resultMap="BaseResultMap" parameterType="map">
+  <select id="checkLogin" resultMap="BaseResultMap" parameterType="map">
     SELECT
     <include refid="Base_Column_List" />
     FROM user
     WHERE phone = #{phone} AND password = #{password}
   </select>
+  <update id="updatePassword" parameterType="map">
+    UPDATE user
+    SET password = #{newPassword},update_time = now()
+    WHERE phone = #{phone}
+  </update>
 </mapper>

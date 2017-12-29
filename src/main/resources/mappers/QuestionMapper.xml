@@ -68,9 +68,9 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
+      <!--<if test="updateTime != null" >-->
         update_time = now(),
-      </if>
+      <!--</if>-->
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -81,4 +81,10 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--获取所有的密码提示问题-->
+  <select id="getAllQuestion" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM question
+  </select>
 </mapper>
