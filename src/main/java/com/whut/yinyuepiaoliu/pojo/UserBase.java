@@ -3,25 +3,24 @@ package com.whut.yinyuepiaoliu.pojo;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-@Component(value = "user")
-public class User {
+
+@Component(value = "userBase")
+public class UserBase {
     private Integer id;
 
-    private String phone;
+    private String nickname;
 
-    private String password;
-
-    private String username;
-
-    private String image;
+    private String avatar;
 
     private String motto;
 
-    private String name;
+    private String phone;
 
     private Integer sex;
 
-    private Integer age;
+    private Date birth;
+
+    private String constellation;
 
     private String email;
 
@@ -31,7 +30,7 @@ public class User {
 
     private String area;
 
-    private String address;
+    private Integer role;
 
     private String qq;
 
@@ -39,36 +38,32 @@ public class User {
 
     private String weibo;
 
-    private Integer role;
+    private Date updateTime;
 
     private Date createTime;
 
-    private Date updateTime;
-
-    public User(Integer id, String phone, String password, String username, String image, String motto, String name, Integer sex, Integer age, String email, String province, String city, String area, String address, String qq, String weixin, String weibo, Integer role, Date createTime, Date updateTime) {
+    public UserBase(Integer id, String nickname, String avatar, String motto, String phone, Integer sex, Date birth, String constellation, String email, String province, String city, String area, Integer role, String qq, String weixin, String weibo, Date updateTime, Date createTime) {
         this.id = id;
-        this.phone = phone;
-        this.password = password;
-        this.username = username;
-        this.image = image;
+        this.nickname = nickname;
+        this.avatar = avatar;
         this.motto = motto;
-        this.name = name;
+        this.phone = phone;
         this.sex = sex;
-        this.age = age;
+        this.birth = birth;
+        this.constellation = constellation;
         this.email = email;
         this.province = province;
         this.city = city;
         this.area = area;
-        this.address = address;
+        this.role = role;
         this.qq = qq;
         this.weixin = weixin;
         this.weibo = weibo;
-        this.role = role;
-        this.createTime = createTime;
         this.updateTime = updateTime;
+        this.createTime = createTime;
     }
 
-    public User() {
+    public UserBase() {
         super();
     }
 
@@ -80,36 +75,20 @@ public class User {
         this.id = id;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
     }
 
-    public String getPassword() {
-        return password;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image == null ? null : image.trim();
+    public void setAvatar(String avatar) {
+        this.avatar = avatar == null ? null : avatar.trim();
     }
 
     public String getMotto() {
@@ -120,12 +99,12 @@ public class User {
         this.motto = motto == null ? null : motto.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public Integer getSex() {
@@ -136,12 +115,20 @@ public class User {
         this.sex = sex;
     }
 
-    public Integer getAge() {
-        return age;
+    public Date getBirth() {
+        return birth;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
+
+    public String getConstellation() {
+        return constellation;
+    }
+
+    public void setConstellation(String constellation) {
+        this.constellation = constellation == null ? null : constellation.trim();
     }
 
     public String getEmail() {
@@ -176,12 +163,12 @@ public class User {
         this.area = area == null ? null : area.trim();
     }
 
-    public String getAddress() {
-        return address;
+    public Integer getRole() {
+        return role;
     }
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     public String getQq() {
@@ -208,12 +195,12 @@ public class User {
         this.weibo = weibo == null ? null : weibo.trim();
     }
 
-    public Integer getRole() {
-        return role;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Date getCreateTime() {
@@ -222,13 +209,5 @@ public class User {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 }

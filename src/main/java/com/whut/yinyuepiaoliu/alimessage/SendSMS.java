@@ -11,6 +11,7 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.whut.yinyuepiaoliu.common.Const;
 import com.whut.yinyuepiaoliu.pojo.util.Message;
+import com.whut.yinyuepiaoliu.pojo.util.YZMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,7 @@ import java.util.Random;
 @Component(value = "sendSMS")
 public class SendSMS {
     @Autowired
-    private Message message;
+    private YZMessage yzMessage;
 
     //产品名称:云通信短信API产品,开发者无需替换
     private static final String product = "Dysmsapi";
@@ -152,16 +153,16 @@ public class SendSMS {
     }
 
     // 发送验证码
-    public Message sendMessage(String phone) {
+    public YZMessage sendMessage(String phone) {
         String code = RandomCodeDemo();
-        message.setRandomNumber(code);
+        yzMessage.setRandomNumber(code);
         //发短信
         SendSmsResponse response = null;
         try {
             response = sendSms(phone, code);
         } catch (ClientException e) {
         }
-        message.setHzCode(response.getCode());
+        yzMessage.setHzCode(response.getCode());
 //        System.out.println("短信接口返回的数据----------------");
 //        System.out.println("Code=" + response.getCode());
 //        System.out.println("Message=" + response.getMessage());
@@ -183,8 +184,8 @@ public class SendSMS {
 //            System.out.println("短信明细查询接口返回数据----------------");
 //            System.out.println("Code=" + querySendDetailsResponse.getCode());
 //            System.out.println("Message=" + querySendDetailsResponse.getMessage());
-            message.setMxCode(querySendDetailsResponse.getCode());
-            message.setMxMessage(querySendDetailsResponse.getMessage());
+            yzMessage.setMxCode(querySendDetailsResponse.getCode());
+            yzMessage.setMxMessage(querySendDetailsResponse.getMessage());
 //            int i = 0;
             for (QuerySendDetailsResponse.SmsSendDetailDTO smsSendDetailDTO : querySendDetailsResponse.getSmsSendDetailDTOs()) {
 //                System.out.println("SmsSendDetailDTO[" + i + "]:");
@@ -196,15 +197,15 @@ public class SendSMS {
 //                System.out.println("SendDate=" + smsSendDetailDTO.getSendDate());
 //                System.out.println("SendStatus=" + smsSendDetailDTO.getSendStatus());
 //                System.out.println("Template=" + smsSendDetailDTO.getTemplateCode());
-                message.setMxPhone(smsSendDetailDTO.getPhoneNum());
-                message.setMxReceiveDate(smsSendDetailDTO.getReceiveDate());
-                message.setMxSendDate(smsSendDetailDTO.getSendDate());
-                message.setMxSendStatus(smsSendDetailDTO.getSendStatus());
+                yzMessage.setMxPhone(smsSendDetailDTO.getPhoneNum());
+                yzMessage.setMxReceiveDate(smsSendDetailDTO.getReceiveDate());
+                yzMessage.setMxSendDate(smsSendDetailDTO.getSendDate());
+                yzMessage.setMxSendStatus(smsSendDetailDTO.getSendStatus());
             }
 //            System.out.println("TotalCount=" + querySendDetailsResponse.getTotalCount());
 //            System.out.println("RequestId=" + querySendDetailsResponse.getRequestId());
         }
 
-        return message;
+        return yzMessage;
     }
 }

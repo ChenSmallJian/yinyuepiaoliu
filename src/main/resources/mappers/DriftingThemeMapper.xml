@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whut.yinyuepiaoliu.dao.DriftingThemeMapper" >
+  <resultMap id="BaseResultMap" type="com.whut.yinyuepiaoliu.pojo.DriftingTheme" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="theme_identifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="drifting_theme" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="drifting_pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="drifting_pic_big" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="users_limit" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="current_users_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="departure_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="drifting_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="praise_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="read_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="collect_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="comment_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="forward_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, theme_identifier, music_id, user_id, drifting_theme, drifting_pic, drifting_pic_big, 
+    users_limit, current_users_num, departure_time, drifting_status, praise_num, read_num, 
+    collect_num, comment_num, forward_num, update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from yypl_drifting_theme_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yypl_drifting_theme_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.whut.yinyuepiaoliu.pojo.DriftingTheme" >
+    insert into yypl_drifting_theme_info (id, theme_identifier, music_id, 
+      user_id, drifting_theme, drifting_pic, 
+      drifting_pic_big, users_limit, current_users_num, 
+      departure_time, drifting_status, praise_num, 
+      read_num, collect_num, comment_num, 
+      forward_num, update_time, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{themeIdentifier,jdbcType=VARCHAR}, #{musicId,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{driftingTheme,jdbcType=VARCHAR}, #{driftingPic,jdbcType=VARCHAR}, 
+      #{driftingPicBig,jdbcType=VARCHAR}, #{usersLimit,jdbcType=INTEGER}, #{currentUsersNum,jdbcType=INTEGER}, 
+      #{departureTime,jdbcType=TIMESTAMP}, #{driftingStatus,jdbcType=INTEGER}, #{praiseNum,jdbcType=INTEGER}, 
+      #{readNum,jdbcType=INTEGER}, #{collectNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
+      #{forwardNum,jdbcType=INTEGER}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whut.yinyuepiaoliu.pojo.DriftingTheme" >
+    insert into yypl_drifting_theme_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="themeIdentifier != null" >
+        theme_identifier,
+      </if>
+      <if test="musicId != null" >
+        music_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="driftingTheme != null" >
+        drifting_theme,
+      </if>
+      <if test="driftingPic != null" >
+        drifting_pic,
+      </if>
+      <if test="driftingPicBig != null" >
+        drifting_pic_big,
+      </if>
+      <if test="usersLimit != null" >
+        users_limit,
+      </if>
+      <if test="currentUsersNum != null" >
+        current_users_num,
+      </if>
+      <if test="departureTime != null" >
+        departure_time,
+      </if>
+      <if test="driftingStatus != null" >
+        drifting_status,
+      </if>
+      <if test="praiseNum != null" >
+        praise_num,
+      </if>
+      <if test="readNum != null" >
+        read_num,
+      </if>
+      <if test="collectNum != null" >
+        collect_num,
+      </if>
+      <if test="commentNum != null" >
+        comment_num,
+      </if>
+      <if test="forwardNum != null" >
+        forward_num,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="themeIdentifier != null" >
+        #{themeIdentifier,jdbcType=VARCHAR},
+      </if>
+      <if test="musicId != null" >
+        #{musicId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="driftingTheme != null" >
+        #{driftingTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="driftingPic != null" >
+        #{driftingPic,jdbcType=VARCHAR},
+      </if>
+      <if test="driftingPicBig != null" >
+        #{driftingPicBig,jdbcType=VARCHAR},
+      </if>
+      <if test="usersLimit != null" >
+        #{usersLimit,jdbcType=INTEGER},
+      </if>
+      <if test="currentUsersNum != null" >
+        #{currentUsersNum,jdbcType=INTEGER},
+      </if>
+      <if test="departureTime != null" >
+        #{departureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="driftingStatus != null" >
+        #{driftingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="praiseNum != null" >
+        #{praiseNum,jdbcType=INTEGER},
+      </if>
+      <if test="readNum != null" >
+        #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null" >
+        #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null" >
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="forwardNum != null" >
+        #{forwardNum,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        now(),
+      </if>
+      <if test="createTime != null" >
+        now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whut.yinyuepiaoliu.pojo.DriftingTheme" >
+    update yypl_drifting_theme_info
+    <set >
+      <if test="themeIdentifier != null" >
+        theme_identifier = #{themeIdentifier,jdbcType=VARCHAR},
+      </if>
+      <if test="musicId != null" >
+        music_id = #{musicId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="driftingTheme != null" >
+        drifting_theme = #{driftingTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="driftingPic != null" >
+        drifting_pic = #{driftingPic,jdbcType=VARCHAR},
+      </if>
+      <if test="driftingPicBig != null" >
+        drifting_pic_big = #{driftingPicBig,jdbcType=VARCHAR},
+      </if>
+      <if test="usersLimit != null" >
+        users_limit = #{usersLimit,jdbcType=INTEGER},
+      </if>
+      <if test="currentUsersNum != null" >
+        current_users_num = #{currentUsersNum,jdbcType=INTEGER},
+      </if>
+      <if test="departureTime != null" >
+        departure_time = #{departureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="driftingStatus != null" >
+        drifting_status = #{driftingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="praiseNum != null" >
+        praise_num = #{praiseNum,jdbcType=INTEGER},
+      </if>
+      <if test="readNum != null" >
+        read_num = #{readNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null" >
+        collect_num = #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null" >
+        comment_num = #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="forwardNum != null" >
+        forward_num = #{forwardNum,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = now(),
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whut.yinyuepiaoliu.pojo.DriftingTheme" >
+    update yypl_drifting_theme_info
+    set theme_identifier = #{themeIdentifier,jdbcType=VARCHAR},
+      music_id = #{musicId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      drifting_theme = #{driftingTheme,jdbcType=VARCHAR},
+      drifting_pic = #{driftingPic,jdbcType=VARCHAR},
+      drifting_pic_big = #{driftingPicBig,jdbcType=VARCHAR},
+      users_limit = #{usersLimit,jdbcType=INTEGER},
+      current_users_num = #{currentUsersNum,jdbcType=INTEGER},
+      departure_time = #{departureTime,jdbcType=TIMESTAMP},
+      drifting_status = #{driftingStatus,jdbcType=INTEGER},
+      praise_num = #{praiseNum,jdbcType=INTEGER},
+      read_num = #{readNum,jdbcType=INTEGER},
+      collect_num = #{collectNum,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      forward_num = #{forwardNum,jdbcType=INTEGER},
+      update_time = now(),
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

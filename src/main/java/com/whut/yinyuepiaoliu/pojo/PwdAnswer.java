@@ -1,8 +1,11 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
-public class Answer {
+@Component(value = "pwdAnswer")
+public class PwdAnswer {
     private Integer id;
 
     private Integer userId;
@@ -11,20 +14,20 @@ public class Answer {
 
     private String answer;
 
-    private Date createTime;
-
     private Date updateTime;
 
-    public Answer(Integer id, Integer userId, Integer questionId, String answer, Date createTime, Date updateTime) {
+    private Date createTime;
+
+    public PwdAnswer(Integer id, Integer userId, Integer questionId, String answer, Date updateTime, Date createTime) {
         this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
-        this.createTime = createTime;
         this.updateTime = updateTime;
+        this.createTime = createTime;
     }
 
-    public Answer() {
+    public PwdAnswer() {
         super();
     }
 
@@ -60,19 +63,19 @@ public class Answer {
         this.answer = answer == null ? null : answer.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     public Date getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

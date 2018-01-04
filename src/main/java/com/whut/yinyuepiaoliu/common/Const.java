@@ -6,33 +6,50 @@ import java.util.Set;
 
 public class Const {
     public static final String CURRENT_USER = "currentUser";
+    public static final String YZM_MESSAGE = "yzm_message";
 
+    // 验证码过期时间，单位是分钟
     public static final int CODE_TIME_OUT =  2;
 
     public interface ProductListOrderBy {
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_asc", "price_desc");
     }
 
+    // 登录时的授权类型：手机，qq，微信，微博，百度
+    public interface Login_authorization{
+        int LOGIN_FROM_PHONE = 0;
+        int LOGIN_FROM_QQ = 1;
+        int LOGIN_FROM_WEIXIN = 2;
+        int LOGIN_FROM_WEIBO = 3;
+        int LOGIN_FROM_BAIDU = 4;
+    }
+
+    // 默认头像，默认签名，默认昵称
     public interface Default_info{
         String DEFAULT_ICON = "default icon";
         String DEFAULT_MOTTO = "暂时没有签名";
+        String DEFAULT_NICKNAME = "用户";
     }
 
+    // 发送验证码的类型：注册和找回密码
     public interface VerificationCodeType{
         int REGISTER = 0;
         int FIND_PASSWORD = 1;
     }
 
+    // 验证码返回的类型：OK表示发送成功，isv.BUSINESS_LIMIT_CONTROL表示发送次数过多
     public interface VerificationCodeResultType{
         String BUSINESS_LIMIT_CONTROL = "isv.BUSINESS_LIMIT_CONTROL";
         String OK = "OK";
     }
 
+    // 用户角色
     public interface Role {
         int ROLE_CUSTOMER = 0; // 普通用户
         int ROLE_ADMIN = 1; // 管理员
     }
 
+    // 返回的错误码类型
     public interface ErrorType{
         int ERROR_2 = 2;
     }
@@ -182,5 +199,7 @@ public class Const {
 
         String SAVE_ANSWER_FAIL = "保存密码提示问题答案失败";
         String SAVE_ANSWER_SUCCESS = "保存密码提示问题成功";
+
+        String IDENTITY_TYPE_ERROR = "授权类型有误";
     }
 }

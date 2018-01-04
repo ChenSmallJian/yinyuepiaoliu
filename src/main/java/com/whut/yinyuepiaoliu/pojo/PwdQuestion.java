@@ -1,24 +1,27 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
-public class Question {
+@Component(value = "pwdQuestion")
+public class PwdQuestion {
     private Integer id;
 
     private String question;
 
-    private Date createTime;
-
     private Date updateTime;
 
-    public Question(Integer id, String question, Date createTime, Date updateTime) {
+    private Date createTime;
+
+    public PwdQuestion(Integer id, String question, Date updateTime, Date createTime) {
         this.id = id;
         this.question = question;
-        this.createTime = createTime;
         this.updateTime = updateTime;
+        this.createTime = createTime;
     }
 
-    public Question() {
+    public PwdQuestion() {
         super();
     }
 
@@ -38,19 +41,19 @@ public class Question {
         this.question = question == null ? null : question.trim();
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     public Date getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

@@ -1,9 +1,7 @@
 package com.whut.yinyuepiaoliu.service;
 
 import com.whut.yinyuepiaoliu.common.ServerResponse;
-import com.whut.yinyuepiaoliu.pojo.Answer;
-import com.whut.yinyuepiaoliu.pojo.Question;
-import com.whut.yinyuepiaoliu.pojo.User;
+import com.whut.yinyuepiaoliu.pojo.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -14,27 +12,27 @@ import java.util.List;
 public interface IUserService {
     ServerResponse<String> checkRegister(String phone);
 
-    ServerResponse<User> login(String phone, String password);
+    ServerResponse<UserBase> login(String identifier, String credential,int identity_type);
 
     ServerResponse<String> getVerificationCode(String phone,int type, HttpSession session);
 
     ServerResponse<String> checkVerificationCode(String code, HttpSession session);
 
-    ServerResponse<String> register(User user);
+    ServerResponse<String> register(String phone, String password);
 
     ServerResponse forgetGetQuestion(String phone);
 
-    ServerResponse forgetCheckAnswer(String phone,List<Answer> answerList);
+    ServerResponse forgetCheckAnswer(String phone,List<PwdAnswer> pwdAnswerList);
 
     ServerResponse<String> forgetResetPassword(String phone, String passwordNew, String forgetToken);
 
-    ServerResponse<User> updateUserInformation(User userUpdate);
+    ServerResponse<UserBase> updateUserInformation(UserBase userBaseUpdate);
 
-    ServerResponse<User> getUserInformation(Integer userId);
+    ServerResponse<UserBase> getUserInformation(Integer userId);
 
     ServerResponse getAllQuestion();
 
     ServerResponse<String> checkSetQuestion(String userId);
 
-    ServerResponse<String> saveAnswer(List<Answer> answerList, int userId);
+    ServerResponse<String> saveAnswer(List<PwdAnswer> pwdAnswerList, int userId);
 }

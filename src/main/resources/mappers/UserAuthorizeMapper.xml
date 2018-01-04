@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whut.yinyuepiaoliu.dao.UserAuthorizeMapper" >
+  <resultMap id="BaseResultMap" type="com.whut.yinyuepiaoliu.pojo.UserAuthorize" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="identity_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="identifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="credential" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, identity_type, identifier, credential, update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from yypl_user_authorize
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yypl_user_authorize
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.whut.yinyuepiaoliu.pojo.UserAuthorize" >
+    insert into yypl_user_authorize (id, user_id, identity_type, 
+      identifier, credential, update_time, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{identityType,jdbcType=INTEGER}, 
+      #{identifier,jdbcType=VARCHAR}, #{credential,jdbcType=VARCHAR}, now(),
+      now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.whut.yinyuepiaoliu.pojo.UserAuthorize" >
+    insert into yypl_user_authorize
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="identityType != null" >
+        identity_type,
+      </if>
+      <if test="identifier != null" >
+        identifier,
+      </if>
+      <if test="credential != null" >
+        credential,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="identityType != null" >
+        #{identityType,jdbcType=INTEGER},
+      </if>
+      <if test="identifier != null" >
+        #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="credential != null" >
+        #{credential,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        now(),
+      </if>
+      <if test="createTime != null" >
+        now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whut.yinyuepiaoliu.pojo.UserAuthorize" >
+    update yypl_user_authorize
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="identityType != null" >
+        identity_type = #{identityType,jdbcType=INTEGER},
+      </if>
+      <if test="identifier != null" >
+        identifier = #{identifier,jdbcType=VARCHAR},
+      </if>
+      <if test="credential != null" >
+        credential = #{credential,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = now(),
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whut.yinyuepiaoliu.pojo.UserAuthorize" >
+    update yypl_user_authorize
+    set user_id = #{userId,jdbcType=INTEGER},
+      identity_type = #{identityType,jdbcType=INTEGER},
+      identifier = #{identifier,jdbcType=VARCHAR},
+      credential = #{credential,jdbcType=VARCHAR},
+      update_time = now(),
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!--checkLogin-->
+  <!--检查密码是否正确，正确则返回用户的信息-->
+  <select id="checkLogin" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM yypl_user_authorize
+    WHERE identifier = #{identifier} AND credential = #{credential}
+  </select>
+  <!--修改密码-->
+  <update id="updatePassword" parameterType="map">
+    UPDATE yypl_user_authorize
+    SET credential = #{newPassword},update_time = now()
+    WHERE identifier = #{phone}
+  </update>
+</mapper>

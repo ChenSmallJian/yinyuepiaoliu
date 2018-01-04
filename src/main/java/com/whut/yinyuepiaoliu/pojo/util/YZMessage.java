@@ -2,8 +2,8 @@ package com.whut.yinyuepiaoliu.pojo.util;
 
 import org.springframework.stereotype.Component;
 
-@Component(value = "message")
-public class Message {
+@Component(value = "yzMessage")
+public class YZMessage {
     private String randomNumber;
 
     // 发送短信的回执信息

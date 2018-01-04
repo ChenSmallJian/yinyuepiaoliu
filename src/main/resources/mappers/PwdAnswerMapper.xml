@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.whut.yinyuepiaoliu.dao.AnswerMapper" >
-  <resultMap id="BaseResultMap" type="com.whut.yinyuepiaoliu.pojo.Answer" >
+<mapper namespace="com.whut.yinyuepiaoliu.dao.PwdAnswerMapper" >
+  <resultMap id="BaseResultMap" type="com.whut.yinyuepiaoliu.pojo.PwdAnswer" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="question_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="answer" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, question_id, answer, create_time, update_time
+    id, user_id, question_id, answer, update_time, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from answer
+    from yypl_pwd_answer_info
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from answer
+    delete from yypl_pwd_answer_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.whut.yinyuepiaoliu.pojo.Answer" >
-    insert into answer (id, user_id, question_id, 
-      answer, create_time, update_time
+  <insert id="insert" parameterType="com.whut.yinyuepiaoliu.pojo.PwdAnswer" >
+    insert into yypl_pwd_answer_info (id, user_id, question_id, 
+      answer, update_time, create_time
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, 
       #{answer,jdbcType=VARCHAR}, now(), now()
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.whut.yinyuepiaoliu.pojo.Answer" >
-    insert into answer
+  <insert id="insertSelective" parameterType="com.whut.yinyuepiaoliu.pojo.PwdAnswer" >
+    insert into yypl_pwd_answer_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -47,11 +47,11 @@
       <if test="answer != null" >
         answer,
       </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
       <if test="updateTime != null" >
         update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -67,16 +67,16 @@
       <if test="answer != null" >
         #{answer,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
+      <if test="updateTime != null" >
         now(),
       </if>
-      <if test="updateTime != null" >
+      <if test="createTime != null" >
         now(),
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.whut.yinyuepiaoliu.pojo.Answer" >
-    update answer
+  <update id="updateByPrimaryKeySelective" parameterType="com.whut.yinyuepiaoliu.pojo.PwdAnswer" >
+    update yypl_pwd_answer_info
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
@@ -87,37 +87,37 @@
       <if test="answer != null" >
         answer = #{answer,jdbcType=VARCHAR},
       </if>
+      <if test="updateTime != null" >
+        update_time = now(),
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <!--<if test="updateTime != null" >-->
-        now(),
-      <!--</if>-->
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.whut.yinyuepiaoliu.pojo.Answer" >
-    update answer
+  <update id="updateByPrimaryKey" parameterType="com.whut.yinyuepiaoliu.pojo.PwdAnswer" >
+    update yypl_pwd_answer_info
     set user_id = #{userId,jdbcType=INTEGER},
       question_id = #{questionId,jdbcType=INTEGER},
       answer = #{answer,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = now()
+      update_time = now(),
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <!--获取密码提示问题-->
-  <select id="getQuestion" resultType="int" parameterType="int">
-    SELECT question_id FROM answer
-    WHERE user_id = #{user_id}
-  </select>
-  <select id="checkAnswer" resultType="int" parameterType="map">
-    SELECT count(1) FROM answer
-    WHERE user_id = #{user_id} AND question_id = #{question_id} AND answer = #{answer}
-  </select>
   <!--查询用户是否已经设置密码提示问题-->
   <select id="checkSetQuestion" resultType="int" parameterType="string">
-    SELECT count(1) FROM answer
+    SELECT count(1) FROM yypl_pwd_answer_info
     WHERE user_id = #{userId}
+  </select>
+  <!--获取密码提示问题-->
+  <select id="getQuestion" resultType="int" parameterType="int">
+    SELECT question_id FROM yypl_pwd_answer_info
+    WHERE user_id = #{user_id}
+  </select>
+  <!--检查密码问题的答案是否正确-->
+  <select id="checkAnswer" resultType="int" parameterType="map">
+    SELECT count(1) FROM yypl_pwd_answer_info
+    WHERE user_id = #{user_id} AND question_id = #{question_id} AND answer = #{answer}
   </select>
 </mapper>

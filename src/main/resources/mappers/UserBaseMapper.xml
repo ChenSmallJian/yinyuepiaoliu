@@ -1,89 +1,96 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.whut.yinyuepiaoliu.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.whut.yinyuepiaoliu.pojo.User" >
+<mapper namespace="com.whut.yinyuepiaoliu.dao.UserBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.whut.yinyuepiaoliu.pojo.UserBase" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="image" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="avatar" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="motto" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="sex" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="birth" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="constellation" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="area" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="role" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="qq" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="weixin" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="weibo" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="role" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, phone, password, username, image, motto, name, sex, age, email, province, city, 
-    area, address, qq, weixin, weibo, role, create_time, update_time
+    id, nickname, avatar, motto, phone, sex, birth, constellation, email, province, city, 
+    area, role, qq, weixin, weibo, update_time, create_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from user
+    from yypl_user_base_info
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from user
+    delete from yypl_user_base_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.whut.yinyuepiaoliu.pojo.User" >
-    insert into user (id, phone, password, 
-      username, image, motto, 
-      name, sex, age, email, 
+  <insert id="insert" parameterType="com.whut.yinyuepiaoliu.pojo.UserBase"  >
+    insert into yypl_user_base_info (id, nickname, avatar, 
+      motto, phone, sex, 
+      birth, constellation, email, 
       province, city, area, 
-      address, qq, weixin, 
-      weibo, role, create_time, 
-      update_time)
-    values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{username,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{motto,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
+      role, qq, weixin, weibo, 
+      update_time, create_time)
+    values (#{id,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{motto,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{birth,jdbcType=DATE}, #{constellation,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, 
-      #{weibo,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(),
-      now())
+      #{role,jdbcType=INTEGER}, #{qq,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, #{weibo,jdbcType=VARCHAR}, 
+      now(), now())
   </insert>
-  <insert id="insertSelective" parameterType="com.whut.yinyuepiaoliu.pojo.User" >
-    insert into user
+  <insert id="insertAndGetId" parameterType="com.whut.yinyuepiaoliu.pojo.UserBase"  useGeneratedKeys="true" keyProperty="id">
+    insert into yypl_user_base_info (id, nickname, avatar,
+    motto, phone, sex,
+    birth, constellation, email,
+    province, city, area,
+    role, qq, weixin, weibo,
+    update_time, create_time)
+    values (#{id,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR},
+    #{motto,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+    #{birth,jdbcType=DATE}, #{constellation,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+    #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR},
+    #{role,jdbcType=INTEGER}, #{qq,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, #{weibo,jdbcType=VARCHAR},
+    now(), now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.whut.yinyuepiaoliu.pojo.UserBase" >
+    insert into yypl_user_base_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="phone != null" >
-        phone,
+      <if test="nickname != null" >
+        nickname,
       </if>
-      <if test="password != null" >
-        password,
-      </if>
-      <if test="username != null" >
-        username,
-      </if>
-      <if test="image != null" >
-        image,
+      <if test="avatar != null" >
+        avatar,
       </if>
       <if test="motto != null" >
         motto,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="phone != null" >
+        phone,
       </if>
       <if test="sex != null" >
         sex,
       </if>
-      <if test="age != null" >
-        age,
+      <if test="birth != null" >
+        birth,
+      </if>
+      <if test="constellation != null" >
+        constellation,
       </if>
       <if test="email != null" >
         email,
@@ -97,8 +104,8 @@
       <if test="area != null" >
         area,
       </if>
-      <if test="address != null" >
-        address,
+      <if test="role != null" >
+        role,
       </if>
       <if test="qq != null" >
         qq,
@@ -109,43 +116,37 @@
       <if test="weibo != null" >
         weibo,
       </if>
-      <if test="role != null" >
-        role,
+      <if test="updateTime != null" >
+        update_time,
       </if>
       <if test="createTime != null" >
         create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null" >
-        #{image,jdbcType=VARCHAR},
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
       </if>
       <if test="motto != null" >
         #{motto,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
         #{sex,jdbcType=INTEGER},
       </if>
-      <if test="age != null" >
-        #{age,jdbcType=INTEGER},
+      <if test="birth != null" >
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="constellation != null" >
+        #{constellation,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
@@ -159,8 +160,8 @@
       <if test="area != null" >
         #{area,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
+      <if test="role != null" >
+        #{role,jdbcType=INTEGER},
       </if>
       <if test="qq != null" >
         #{qq,jdbcType=VARCHAR},
@@ -171,43 +172,37 @@
       <if test="weibo != null" >
         #{weibo,jdbcType=VARCHAR},
       </if>
-      <if test="role != null" >
-        #{role,jdbcType=INTEGER},
+      <if test="updateTime != null" >
+        now(),
       </if>
       <if test="createTime != null" >
         now(),
       </if>
-      <if test="updateTime != null" >
-        now(),
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.whut.yinyuepiaoliu.pojo.User" >
-    update user
+  <update id="updateByPrimaryKeySelective" parameterType="com.whut.yinyuepiaoliu.pojo.UserBase" >
+    update yypl_user_base_info
     <set >
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="image != null" >
-        image = #{image,jdbcType=VARCHAR},
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
       </if>
       <if test="motto != null" >
         motto = #{motto,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
         sex = #{sex,jdbcType=INTEGER},
       </if>
-      <if test="age != null" >
-        age = #{age,jdbcType=INTEGER},
+      <if test="birth != null" >
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="constellation != null" >
+        constellation = #{constellation,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
@@ -221,8 +216,8 @@
       <if test="area != null" >
         area = #{area,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
+      <if test="role != null" >
+        role = #{role,jdbcType=INTEGER},
       </if>
       <if test="qq != null" >
         qq = #{qq,jdbcType=VARCHAR},
@@ -233,60 +228,45 @@
       <if test="weibo != null" >
         weibo = #{weibo,jdbcType=VARCHAR},
       </if>
-      <if test="role != null" >
-        role = #{role,jdbcType=INTEGER},
+      <if test="updateTime != null" >
+        update_time = now(),
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <!--<if test="updateTime != null" >-->
-        update_time = now(),
-      <!--</if>-->
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.whut.yinyuepiaoliu.pojo.User" >
-    update user
-    set phone = #{phone,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR},
-      image = #{image,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.whut.yinyuepiaoliu.pojo.UserBase" >
+    update yypl_user_base_info
+    set nickname = #{nickname,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
       motto = #{motto,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
-      age = #{age,jdbcType=INTEGER},
+      birth = #{birth,jdbcType=DATE},
+      constellation = #{constellation,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       area = #{area,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
+      role = #{role,jdbcType=INTEGER},
       qq = #{qq,jdbcType=VARCHAR},
       weixin = #{weixin,jdbcType=VARCHAR},
       weibo = #{weibo,jdbcType=VARCHAR},
-      role = #{role,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = now()
+      update_time = now(),
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <!-- 检查手机号是否存在 -->
   <select id="checkPhone" resultType="int" parameterType="string">
-    SELECT count(1) FROM user
+    SELECT count(1) FROM yypl_user_base_info
     WHERE phone = #{phone}
   </select>
+  <!--根据手机号获取用户id-->
   <select id="getUserId" resultType="int" parameterType="string">
-    SELECT id FROM user
+    SELECT id FROM yypl_user_base_info
     WHERE phone = #{phone}
   </select>
-  <!--检查密码是否正确，正确则返回用户的信息-->
-  <select id="checkLogin" resultMap="BaseResultMap" parameterType="map">
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM user
-    WHERE phone = #{phone} AND password = #{password}
-  </select>
-  <update id="updatePassword" parameterType="map">
-    UPDATE user
-    SET password = #{newPassword},update_time = now()
-    WHERE phone = #{phone}
-  </update>
 </mapper>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whut.yinyuepiaoliu.dao.MusicBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.whut.yinyuepiaoliu.pojo.MusicBase" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="source_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="music_source_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="music_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_pic_big" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_lyrics" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_author" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_album" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="music_release" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="music_duration" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, source_type, music_source_id, music_address, music_name, music_pic, music_pic_big, 
+    music_lyrics, music_type, music_author, music_album, music_release, music_duration, 
+    update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from yypl_music_base_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from yypl_music_base_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.whut.yinyuepiaoliu.pojo.MusicBase" >
+    insert into yypl_music_base_info (id, source_type, music_source_id, 
+      music_address, music_name, music_pic, 
+      music_pic_big, music_lyrics, music_type, 
+      music_author, music_album, music_release, 
+      music_duration, update_time, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{sourceType,jdbcType=INTEGER}, #{musicSourceId,jdbcType=INTEGER}, 
+      #{musicAddress,jdbcType=VARCHAR}, #{musicName,jdbcType=VARCHAR}, #{musicPic,jdbcType=VARCHAR}, 
+      #{musicPicBig,jdbcType=VARCHAR}, #{musicLyrics,jdbcType=VARCHAR}, #{musicType,jdbcType=VARCHAR}, 
+      #{musicAuthor,jdbcType=VARCHAR}, #{musicAlbum,jdbcType=VARCHAR}, #{musicRelease,jdbcType=DATE}, 
+      #{musicDuration,jdbcType=TIMESTAMP}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whut.yinyuepiaoliu.pojo.MusicBase" >
+    insert into yypl_music_base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sourceType != null" >
+        source_type,
+      </if>
+      <if test="musicSourceId != null" >
+        music_source_id,
+      </if>
+      <if test="musicAddress != null" >
+        music_address,
+      </if>
+      <if test="musicName != null" >
+        music_name,
+      </if>
+      <if test="musicPic != null" >
+        music_pic,
+      </if>
+      <if test="musicPicBig != null" >
+        music_pic_big,
+      </if>
+      <if test="musicLyrics != null" >
+        music_lyrics,
+      </if>
+      <if test="musicType != null" >
+        music_type,
+      </if>
+      <if test="musicAuthor != null" >
+        music_author,
+      </if>
+      <if test="musicAlbum != null" >
+        music_album,
+      </if>
+      <if test="musicRelease != null" >
+        music_release,
+      </if>
+      <if test="musicDuration != null" >
+        music_duration,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sourceType != null" >
+        #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="musicSourceId != null" >
+        #{musicSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="musicAddress != null" >
+        #{musicAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="musicName != null" >
+        #{musicName,jdbcType=VARCHAR},
+      </if>
+      <if test="musicPic != null" >
+        #{musicPic,jdbcType=VARCHAR},
+      </if>
+      <if test="musicPicBig != null" >
+        #{musicPicBig,jdbcType=VARCHAR},
+      </if>
+      <if test="musicLyrics != null" >
+        #{musicLyrics,jdbcType=VARCHAR},
+      </if>
+      <if test="musicType != null" >
+        #{musicType,jdbcType=VARCHAR},
+      </if>
+      <if test="musicAuthor != null" >
+        #{musicAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="musicAlbum != null" >
+        #{musicAlbum,jdbcType=VARCHAR},
+      </if>
+      <if test="musicRelease != null" >
+        #{musicRelease,jdbcType=DATE},
+      </if>
+      <if test="musicDuration != null" >
+        #{musicDuration,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        now(),
+      </if>
+      <if test="createTime != null" >
+        now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whut.yinyuepiaoliu.pojo.MusicBase" >
+    update yypl_music_base_info
+    <set >
+      <if test="sourceType != null" >
+        source_type = #{sourceType,jdbcType=INTEGER},
+      </if>
+      <if test="musicSourceId != null" >
+        music_source_id = #{musicSourceId,jdbcType=INTEGER},
+      </if>
+      <if test="musicAddress != null" >
+        music_address = #{musicAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="musicName != null" >
+        music_name = #{musicName,jdbcType=VARCHAR},
+      </if>
+      <if test="musicPic != null" >
+        music_pic = #{musicPic,jdbcType=VARCHAR},
+      </if>
+      <if test="musicPicBig != null" >
+        music_pic_big = #{musicPicBig,jdbcType=VARCHAR},
+      </if>
+      <if test="musicLyrics != null" >
+        music_lyrics = #{musicLyrics,jdbcType=VARCHAR},
+      </if>
+      <if test="musicType != null" >
+        music_type = #{musicType,jdbcType=VARCHAR},
+      </if>
+      <if test="musicAuthor != null" >
+        music_author = #{musicAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="musicAlbum != null" >
+        music_album = #{musicAlbum,jdbcType=VARCHAR},
+      </if>
+      <if test="musicRelease != null" >
+        music_release = #{musicRelease,jdbcType=DATE},
+      </if>
+      <if test="musicDuration != null" >
+        music_duration = #{musicDuration,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = now(),
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whut.yinyuepiaoliu.pojo.MusicBase" >
+    update yypl_music_base_info
+    set source_type = #{sourceType,jdbcType=INTEGER},
+      music_source_id = #{musicSourceId,jdbcType=INTEGER},
+      music_address = #{musicAddress,jdbcType=VARCHAR},
+      music_name = #{musicName,jdbcType=VARCHAR},
+      music_pic = #{musicPic,jdbcType=VARCHAR},
+      music_pic_big = #{musicPicBig,jdbcType=VARCHAR},
+      music_lyrics = #{musicLyrics,jdbcType=VARCHAR},
+      music_type = #{musicType,jdbcType=VARCHAR},
+      music_author = #{musicAuthor,jdbcType=VARCHAR},
+      music_album = #{musicAlbum,jdbcType=VARCHAR},
+      music_release = #{musicRelease,jdbcType=DATE},
+      music_duration = #{musicDuration,jdbcType=TIMESTAMP},
+      update_time = now(),
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

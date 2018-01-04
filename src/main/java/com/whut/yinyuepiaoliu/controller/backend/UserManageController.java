@@ -2,7 +2,7 @@ package com.whut.yinyuepiaoliu.controller.backend;
 
 import com.whut.yinyuepiaoliu.common.Const;
 import com.whut.yinyuepiaoliu.common.ServerResponse;
-import com.whut.yinyuepiaoliu.pojo.User;
+import com.whut.yinyuepiaoliu.pojo.UserBase;
 import com.whut.yinyuepiaoliu.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class UserManageController {
     private IUserService iUserService;
 
     @Autowired
-    private User user;
+    private UserBase userBase;
 
     /**
      * 管理员登录
@@ -31,12 +31,12 @@ public class UserManageController {
      */
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(String phone, String password, HttpSession session) {
-        ServerResponse<User> response = iUserService.login(phone, password);
+    public ServerResponse<UserBase> login(String phone, String password, HttpSession session) {
+        ServerResponse<UserBase> response = iUserService.login(phone, password, Const.Login_authorization.LOGIN_FROM_PHONE);
         if (response.isSuccess()) {
-            user = response.getData();
-            if (user.getRole() == Const.Role.ROLE_ADMIN) {
-                session.setAttribute(Const.CURRENT_USER, user);
+            userBase = response.getData();
+            if (userBase.getRole() == Const.Role.ROLE_ADMIN) {
+                session.setAttribute(Const.CURRENT_USER, userBase);
                 return response;
             } else {
                 return ServerResponse.createByErrorMessage(Const.Message.NOT_ADMIN);
