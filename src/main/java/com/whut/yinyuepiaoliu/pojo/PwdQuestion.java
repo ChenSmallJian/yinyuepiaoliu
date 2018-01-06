@@ -1,17 +1,20 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component(value = "pwdQuestion")
+@Component
 public class PwdQuestion {
     private Integer id;
 
     private String question;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     public PwdQuestion(Integer id, String question, Date updateTime, Date createTime) {

@@ -6,6 +6,7 @@ import com.whut.yinyuepiaoliu.common.ServerResponse;
 import com.whut.yinyuepiaoliu.pojo.PwdAnswer;
 import com.whut.yinyuepiaoliu.pojo.UserBase;
 import com.whut.yinyuepiaoliu.service.IUserService;
+import com.whut.yinyuepiaoliu.util.GetConstellation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -233,6 +234,8 @@ public class UserController {
         // 防止横向越权的问题
         userBaseUpdate.setId(userBase.getId());
         userBaseUpdate.setPhone(userBase.getPhone());
+        // 根据生日计算星座
+        userBaseUpdate.setConstellation(GetConstellation.getConstellation(userBaseUpdate.getBirth()));
         ServerResponse<UserBase> response = iUserService.updateUserInformation(userBaseUpdate);
         if (response.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, response.getData());

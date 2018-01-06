@@ -1,10 +1,12 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component(value = "driftingSite")
+@Component
 public class DriftingSite {
     private Integer id;
 
@@ -16,6 +18,8 @@ public class DriftingSite {
 
     private Integer sequenceNumber;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8") // 返回前端时，以这种格式返回，否则返回的是时间戳，也就是一串数字
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") //接收参数的时候，以这种格式接收
     private Date receiveTime;
 
     private Double evaluation;
@@ -28,8 +32,10 @@ public class DriftingSite {
 
     private Integer collectIt;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     public DriftingSite(Integer id, String themeIdentifier, Integer userId, Integer musicId, Integer sequenceNumber, Date receiveTime, Double evaluation, String tags, String comment, Integer likeIt, Integer collectIt, Date updateTime, Date createTime) {

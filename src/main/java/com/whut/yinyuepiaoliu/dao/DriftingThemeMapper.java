@@ -1,9 +1,9 @@
 package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.DriftingTheme;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component(value = "driftingThemeMapper")
+@Repository
 public interface DriftingThemeMapper {
     int deleteByPrimaryKey(Integer id);
 

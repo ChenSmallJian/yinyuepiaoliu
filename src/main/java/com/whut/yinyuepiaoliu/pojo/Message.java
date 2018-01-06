@@ -1,10 +1,11 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component(value = "message")
+@Component
 public class Message {
     private Integer id;
 
@@ -16,8 +17,10 @@ public class Message {
 
     private Integer messageStatus;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     public Message(Integer id, Integer userId, String messageType, Integer messageId, Integer messageStatus, Date updateTime, Date createTime) {

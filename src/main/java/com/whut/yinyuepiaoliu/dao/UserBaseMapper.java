@@ -2,9 +2,9 @@ package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.UserBase;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component(value = "userBaseMapper")
+@Repository
 public interface UserBaseMapper {
     int deleteByPrimaryKey(Integer id);
 

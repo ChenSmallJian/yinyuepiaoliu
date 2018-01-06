@@ -1,10 +1,12 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component(value = "driftingTheme")
+@Component
 public class DriftingTheme {
     private Integer id;
 
@@ -24,6 +26,8 @@ public class DriftingTheme {
 
     private Integer currentUsersNum;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8") // 返回前端时，以这种格式返回，否则返回的是时间戳，也就是一串数字
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") //接收参数的时候，以这种格式接收
     private Date departureTime;
 
     private Integer driftingStatus;
@@ -38,8 +42,10 @@ public class DriftingTheme {
 
     private Integer forwardNum;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     public DriftingTheme(Integer id, String themeIdentifier, Integer musicId, Integer userId, String driftingTheme, String driftingPic, String driftingPicBig, Integer usersLimit, Integer currentUsersNum, Date departureTime, Integer driftingStatus, Integer praiseNum, Integer readNum, Integer collectNum, Integer commentNum, Integer forwardNum, Date updateTime, Date createTime) {

@@ -1,9 +1,9 @@
 package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.MusicBase;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component(value = "musicBaseMapper")
+@Repository
 public interface MusicBaseMapper {
     int deleteByPrimaryKey(Integer id);
 

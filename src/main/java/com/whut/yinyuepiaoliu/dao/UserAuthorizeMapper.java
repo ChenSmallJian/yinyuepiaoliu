@@ -2,9 +2,9 @@ package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.UserAuthorize;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component(value = "userAuthorizeMapper")
+@Repository
 public interface UserAuthorizeMapper {
     int deleteByPrimaryKey(Integer id);
 

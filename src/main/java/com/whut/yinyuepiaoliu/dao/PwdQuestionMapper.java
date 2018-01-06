@@ -1,11 +1,11 @@
 package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.PwdQuestion;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component(value = "pwdQuestionMapper")
+@Repository
 public interface PwdQuestionMapper {
     int deleteByPrimaryKey(Integer id);
 

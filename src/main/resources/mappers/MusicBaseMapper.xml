@@ -185,9 +185,7 @@
       <if test="musicDuration != null" >
         music_duration = #{musicDuration,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null" >
         update_time = now(),
-      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>

@@ -1,9 +1,9 @@
 package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.DriftingSite;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component(value = "driftingSiteMapper")
+@Repository
 public interface DriftingSiteMapper {
     int deleteByPrimaryKey(Integer id);
 

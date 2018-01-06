@@ -1,9 +1,9 @@
 package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.DriftingMessage;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component(value = "driftingMessageMapper")
+@Repository
 public interface DriftingMessageMapper {
     int deleteByPrimaryKey(Integer id);
 

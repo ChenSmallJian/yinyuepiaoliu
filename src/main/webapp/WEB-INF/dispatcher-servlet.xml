@@ -8,6 +8,7 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!--添加注解支持-->
     <context:component-scan base-package="com.whut.yinyuepiaoliu" annotation-config="true"/>
 
     <mvc:annotation-driven>
@@ -20,7 +21,7 @@
                     </list>
                 </property>
             </bean>
-            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>application/json;charset=UTF-8</value>
@@ -30,14 +31,15 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-
-
     <!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="10485760"/> <!-- 10m -->
-        <property name="maxInMemorySize" value="4096" />
+        <property name="maxInMemorySize" value="4096"/>
         <property name="defaultEncoding" value="UTF-8"></property>
     </bean>
 
+    <!-- 对静态资源文件的访问 -->
+
+    <!-- 拦截器 -->
 
 </beans>

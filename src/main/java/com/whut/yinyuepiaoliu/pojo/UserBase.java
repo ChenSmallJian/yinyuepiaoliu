@@ -1,10 +1,12 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component(value = "userBase")
+@Component
 public class UserBase {
     private Integer id;
 
@@ -18,6 +20,8 @@ public class UserBase {
 
     private Integer sex;
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")  // 返回前端时，以这种格式返回，否则返回的是时间戳，也就是一串数字
+    @DateTimeFormat(pattern="yyyy-MM-dd") //接收参数的时候，以这种格式接收
     private Date birth;
 
     private String constellation;
@@ -38,8 +42,10 @@ public class UserBase {
 
     private String weibo;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     public UserBase(Integer id, String nickname, String avatar, String motto, String phone, Integer sex, Date birth, String constellation, String email, String province, String city, String area, Integer role, String qq, String weixin, String weibo, Date updateTime, Date createTime) {
@@ -209,5 +215,28 @@ public class UserBase {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String toString() {
+        return "UserBase{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", motto='" + motto + '\'' +
+                ", phone='" + phone + '\'' +
+                ", sex=" + sex +
+                ", birth=" + birth +
+                ", constellation='" + constellation + '\'' +
+                ", email='" + email + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", area='" + area + '\'' +
+                ", role=" + role +
+                ", qq='" + qq + '\'' +
+                ", weixin='" + weixin + '\'' +
+                ", weibo='" + weibo + '\'' +
+                ", updateTime=" + updateTime +
+                ", createTime=" + createTime +
+                '}';
     }
 }

@@ -2,11 +2,11 @@ package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.PwdAnswer;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component(value = "pwdAnswerMapper")
+@Repository
 public interface PwdAnswerMapper {
     int deleteByPrimaryKey(Integer id);
 

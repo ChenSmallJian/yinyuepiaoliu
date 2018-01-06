@@ -146,15 +146,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     // 用户注册
-    /**
-     * 因为注册方式是通过手机号注册，在获取验证码的时候就会检查手机号是否已经注册
-     * 所以在注册信息的时候，就不需要再检查
-     */
     public ServerResponse<String> register(String phone,String password) {
-//        int resultCount = userMapper.checkPhone(user.getPhone());
-//        if(resultCount > 0){
-//            return ServerResponse.createByErrorMessage(Const.Message.HAS_REGISTER);
-//        }
+        int resultCount = userBaseMapper.checkPhone(phone);
+        if(resultCount > 0){
+            return ServerResponse.createByErrorMessage(Const.Message.HAS_REGISTER);
+        }
         userBase.setPhone(phone);
         // 设置默认信息
         userBase.setNickname(Const.Default_info.DEFAULT_NICKNAME+phone);
@@ -163,7 +159,7 @@ public class UserServiceImpl implements IUserService {
         // 设置用户角色
         userBase.setRole(Const.Role.ROLE_CUSTOMER);
         // 将注册信息插入数据库
-        int resultCount = userBaseMapper.insertAndGetId(userBase);
+        resultCount = userBaseMapper.insertAndGetId(userBase);
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage(Const.Message.REGISTER_FAILED);
         }

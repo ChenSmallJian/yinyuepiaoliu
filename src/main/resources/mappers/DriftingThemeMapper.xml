@@ -217,9 +217,7 @@
       <if test="forwardNum != null" >
         forward_num = #{forwardNum,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
         update_time = now(),
-      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>

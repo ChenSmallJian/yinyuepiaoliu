@@ -2,7 +2,7 @@ package com.whut.yinyuepiaoliu.pojo.util;
 
 import org.springframework.stereotype.Component;
 
-@Component(value = "yzMessage")
+@Component
 public class YZMessage {
     private String randomNumber;
 

@@ -1,9 +1,9 @@
 package com.whut.yinyuepiaoliu.dao;
 
 import com.whut.yinyuepiaoliu.pojo.Message;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component(value = "messageMapper")
+@Repository
 public interface MessageMapper {
     int deleteByPrimaryKey(Integer id);
 

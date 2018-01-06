@@ -1,10 +1,11 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component(value = "driftingMessage")
+@Component
 public class DriftingMessage {
     private Integer id;
 
@@ -20,8 +21,10 @@ public class DriftingMessage {
 
     private Integer messageStatus;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     public DriftingMessage(Integer id, String themeIdentifier, Integer userId, Integer musicId, Integer driftingType, String driftingCondition, Integer messageStatus, Date updateTime, Date createTime) {

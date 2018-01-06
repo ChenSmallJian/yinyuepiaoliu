@@ -1,10 +1,12 @@
 package com.whut.yinyuepiaoliu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Component(value = "musicBase")
+@Component
 public class MusicBase {
     private Integer id;
 
@@ -28,12 +30,17 @@ public class MusicBase {
 
     private String musicAlbum;
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8") // 返回前端时，以这种格式返回，否则返回的是时间戳，也就是一串数字
+    @DateTimeFormat(pattern="yyyy-MM-dd") //接收参数的时候，以这种格式接收
     private Date musicRelease;
 
+    @JsonFormat(pattern="mm:ss",timezone = "GMT+8")
     private Date musicDuration;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     public MusicBase(Integer id, Integer sourceType, Integer musicSourceId, String musicAddress, String musicName, String musicPic, String musicPicBig, String musicLyrics, String musicType, String musicAuthor, String musicAlbum, Date musicRelease, Date musicDuration, Date updateTime, Date createTime) {

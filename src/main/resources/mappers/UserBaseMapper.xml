@@ -228,9 +228,7 @@
       <if test="weibo != null" >
         weibo = #{weibo,jdbcType=VARCHAR},
       </if>
-      <if test="updateTime != null" >
         update_time = now(),
-      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
