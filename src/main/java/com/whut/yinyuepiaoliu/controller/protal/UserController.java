@@ -280,15 +280,11 @@ public class UserController {
     @RequestMapping(value = "upload_icon.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse uploadIcon(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpSession session) {
-        ServerResponse<UserBase> res = iUserService.getUserInformation(1);
-        session.setAttribute(Const.CURRENT_USER, res.getData());
-
         userBase = (UserBase) session.getAttribute(Const.CURRENT_USER);
         if (userBase == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         // 确保用户已经登录
-
         String type = Const.File_save_to.SAVE_TO_ICON;
         String path = request.getSession().getServletContext().getRealPath("upload");
         String FileTargetName = iFileService.upload(file, path, type);
