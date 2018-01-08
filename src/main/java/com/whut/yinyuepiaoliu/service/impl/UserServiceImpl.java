@@ -141,7 +141,7 @@ public class UserServiceImpl implements IUserService {
         if (yzMessage.getRandomNumber().equals(code)) {
             return ServerResponse.createBySuccessMessage(Const.Message.CODE_SUCCESS);
         } else {
-            return ServerResponse.createByErrorMessage(Const.Message.CODE_ERROR);
+            return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_2,Const.Message.CODE_ERROR);
         }
     }
 

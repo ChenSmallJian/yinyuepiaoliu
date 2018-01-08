@@ -1,12 +1,17 @@
 package com.whut.yinyuepiaoliu.controller.protal;
 
+import com.google.common.collect.Maps;
 import com.whut.yinyuepiaoliu.common.Const;
 import com.whut.yinyuepiaoliu.common.ResponseCode;
 import com.whut.yinyuepiaoliu.common.ServerResponse;
 import com.whut.yinyuepiaoliu.pojo.PwdAnswer;
 import com.whut.yinyuepiaoliu.pojo.UserBase;
+import com.whut.yinyuepiaoliu.service.IFileService;
 import com.whut.yinyuepiaoliu.service.IUserService;
 import com.whut.yinyuepiaoliu.util.GetConstellation;
+import com.whut.yinyuepiaoliu.util.PropertiesUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * created by chenjian
@@ -23,11 +29,16 @@ import java.util.List;
 @RequestMapping("/user/")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private IUserService iUserService;
 
     @Autowired
     private UserBase userBase;
+
+    @Autowired
+    private IFileService iFileService;
 
     /**
      * 验证手机号是否已经注册
@@ -54,9 +65,9 @@ public class UserController {
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<UserBase> login(@RequestParam("identifier") String identifier,
-                                      @RequestParam("credential") String credential,
-                                      @RequestParam("identity_type") int identity_type,
-                                      HttpSession session) {
+                                          @RequestParam("credential") String credential,
+                                          @RequestParam("identity_type") int identity_type,
+                                          HttpSession session) {
         ServerResponse<UserBase> response = iUserService.login(identifier, credential, identity_type);
         if (response.isSuccess()) {
             // 登录成功，则将用户信息放入session
@@ -259,8 +270,56 @@ public class UserController {
         return iUserService.getUserInformation(userBase.getId());
     }
 
-    public ServerResponse upload(MultipartFile file, HttpServletRequest request) {
+    /**
+     * 头像上传
+     *
+     * @param file
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "upload_icon.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse uploadIcon(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpSession session) {
+        ServerResponse<UserBase> res = iUserService.getUserInformation(1);
+        session.setAttribute(Const.CURRENT_USER, res.getData());
+
+        userBase = (UserBase) session.getAttribute(Const.CURRENT_USER);
+        if (userBase == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        // 确保用户已经登录
+
+        String type = Const.File_save_to.SAVE_TO_ICON;
         String path = request.getSession().getServletContext().getRealPath("upload");
-        return null;
+        String FileTargetName = iFileService.upload(file, path, type);
+        String url = null;
+        if (FileTargetName != null) {
+            url = PropertiesUtil.getProperty("ftp.server.http.prefix") + type + "/" + FileTargetName;
+            // 获取用户原来的头像地址
+            String oldIcon = userBase.getAvatar();
+            // 将头像信息更新到用户信息中
+            userBase.setAvatar(url);
+            ServerResponse<UserBase> response = iUserService.updateUserInformation(userBase);
+            if (response.isSuccess()) {
+                // 如果是默认头像就不删除，否则就删除该图片
+                if (!Const.Default_info.DEFAULT_ICON.equals(oldIcon)) {
+                    // 删除该头像
+                    if (iFileService.delete(oldIcon)) {
+                        logger.info("删除头像成功");
+                    } else {
+                        logger.info("删除头像失败");
+                    }
+                }
+            } else {
+                return ServerResponse.createByErrorMessage(Const.Message.UPLOAD_ICON_FAIL);
+            }
+        } else {
+            return ServerResponse.createByErrorMessage(Const.Message.UPLOAD_ICON_FAIL);
+        }
+
+        Map fileMap = Maps.newHashMap();
+        fileMap.put("uri", FileTargetName);
+        fileMap.put("url", url);
+        return ServerResponse.createBySuccessMessage(fileMap);
     }
 }

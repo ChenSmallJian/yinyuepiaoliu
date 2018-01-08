@@ -35,10 +35,52 @@ public class FTPUtil {
         this.password = password;
     }
 
-    public static boolean uploadFile(List<File> fileList) throws IOException {
+    /**
+     * 删除文件
+     *
+     * @param path  // 文件路径
+     * @param fileName // 文件名
+     * @return
+     * @throws IOException
+     */
+    public static boolean deleteFile(String path, String fileName) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIP, 21, ftpUser, ftpPass);
         logger.info("开始连接FTP服务器");
-        boolean result = ftpUtil.uploadFile("img", fileList);
+        boolean result = ftpUtil.delete(path, fileName);
+        logger.info("开始删除，删除结果是：{}", result ? "删除成功" : "删除失败");
+        return result;
+    }
+
+    private boolean delete(String path, String fileName) throws IOException {
+        boolean res = true;
+        // 连接FTP服务器
+        if (connectFTPServer(this.ip, this.port, this.user, this.password)) {
+            try {
+                // 切换工作目录
+                ftpClient.changeWorkingDirectory(path);
+                // 打开本地被动模式
+                ftpClient.enterLocalPassiveMode();
+                ftpClient.dele(fileName);
+            } catch (IOException e) {
+                logger.error("上传文件异常", e);
+                res = false;
+            } finally {
+                ftpClient.disconnect();
+            }
+        }
+        return res;
+    }
+
+    /**
+     * @param fileList
+     * @param directory // 将图片存储到哪个文件目录下
+     * @return
+     * @throws IOException
+     */
+    public static boolean uploadFile(List<File> fileList, String directory) throws IOException {
+        FTPUtil ftpUtil = new FTPUtil(ftpIP, 21, ftpUser, ftpPass);
+        logger.info("开始连接FTP服务器");
+        boolean result = ftpUtil.uploadFile(directory, fileList);
         logger.info("结束上传，上传结果是：{}", result ? "上传成功" : "上传失败");
         return result;
     }
@@ -74,6 +116,7 @@ public class FTPUtil {
         return uploaded;
     }
 
+    // 连接FTP服务器
     private boolean connectFTPServer(String ip, int port, String user, String password) {
         boolean isSuccess = false;
         ftpClient = new FTPClient();

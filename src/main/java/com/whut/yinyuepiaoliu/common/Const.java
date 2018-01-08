@@ -1,6 +1,7 @@
 package com.whut.yinyuepiaoliu.common;
 
 import com.google.common.collect.Sets;
+import com.whut.yinyuepiaoliu.util.PropertiesUtil;
 
 import java.util.Set;
 
@@ -9,14 +10,19 @@ public class Const {
     public static final String YZM_MESSAGE = "yzm_message";
 
     // 验证码过期时间，单位是分钟
-    public static final int CODE_TIME_OUT =  2;
+    public static final int CODE_TIME_OUT = 2;
 
     public interface ProductListOrderBy {
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_asc", "price_desc");
     }
 
+    // ftp服务器文件存储的目录
+    public interface File_save_to {
+        String SAVE_TO_ICON = "icon";
+    }
+
     // 登录时的授权类型：手机，qq，微信，微博，百度
-    public interface Login_authorization{
+    public interface Login_authorization {
         int LOGIN_FROM_PHONE = 0;
         int LOGIN_FROM_QQ = 1;
         int LOGIN_FROM_WEIXIN = 2;
@@ -25,20 +31,20 @@ public class Const {
     }
 
     // 默认头像，默认签名，默认昵称
-    public interface Default_info{
-        String DEFAULT_ICON = "default icon";
+    public interface Default_info {
+        String DEFAULT_ICON = PropertiesUtil.getProperty("ftp.server.http.prefix") + "icon/DEFAULT.jpg";
         String DEFAULT_MOTTO = "暂时没有签名";
         String DEFAULT_NICKNAME = "用户";
     }
 
     // 发送验证码的类型：注册和找回密码
-    public interface VerificationCodeType{
+    public interface VerificationCodeType {
         int REGISTER = 0;
         int FIND_PASSWORD = 1;
     }
 
     // 验证码返回的类型：OK表示发送成功，isv.BUSINESS_LIMIT_CONTROL表示发送次数过多
-    public interface VerificationCodeResultType{
+    public interface VerificationCodeResultType {
         String BUSINESS_LIMIT_CONTROL = "isv.BUSINESS_LIMIT_CONTROL";
         String OK = "OK";
     }
@@ -50,7 +56,7 @@ public class Const {
     }
 
     // 返回的错误码类型
-    public interface ErrorType{
+    public interface ErrorType {
         int ERROR_2 = 2;
     }
 
@@ -97,16 +103,17 @@ public class Const {
             return code;
         }
 
-        public static OrderStatusEnum codeOf(int code){
-            for(OrderStatusEnum orderStatusEnum : values()){
-                if(orderStatusEnum.getCode() == code){
+        public static OrderStatusEnum codeOf(int code) {
+            for (OrderStatusEnum orderStatusEnum : values()) {
+                if (orderStatusEnum.getCode() == code) {
                     return orderStatusEnum;
                 }
             }
             throw new RuntimeException("没有找到对应的枚举");
         }
     }
-    public interface AlipayCallback{
+
+    public interface AlipayCallback {
         String TRADE_STATUS_WAIT_BUYER_PAY = "WAIT_BUYER_PAY";
         String TRADE_STATUS_TRADE_SUCCESS = "TRADE_SUCCESS";
 
@@ -114,8 +121,9 @@ public class Const {
         String RESPONSE_FAILED = "failed";
     }
 
-    public enum PayPlatformEnum{
-        ALIPAY("支付宝",1);
+    public enum PayPlatformEnum {
+        ALIPAY("支付宝", 1);
+
         PayPlatformEnum(String value, int code) {
             this.value = value;
             this.code = code;
@@ -133,9 +141,9 @@ public class Const {
         }
     }
 
-    public enum PaymentTypeEnum{
-        ONLINE_PAY("在线支付",1)
-        ;
+    public enum PaymentTypeEnum {
+        ONLINE_PAY("在线支付", 1);
+
         PaymentTypeEnum(String value, int code) {
             this.value = value;
             this.code = code;
@@ -152,9 +160,9 @@ public class Const {
             return code;
         }
 
-        public static PaymentTypeEnum codeOf(int code){
-            for(PaymentTypeEnum paymentTypeEnum : values()){
-                if(paymentTypeEnum.getCode() == code){
+        public static PaymentTypeEnum codeOf(int code) {
+            for (PaymentTypeEnum paymentTypeEnum : values()) {
+                if (paymentTypeEnum.getCode() == code) {
                     return paymentTypeEnum;
                 }
             }
@@ -162,7 +170,7 @@ public class Const {
         }
     }
 
-    public interface Message{
+    public interface Message {
         String NOT_REGISTER = "该手机号尚未注册";
         String ERROR_PASSWORD = "密码错误";
         String LOGIN_SUCCESS = "登录成功";
@@ -201,5 +209,8 @@ public class Const {
         String SAVE_ANSWER_SUCCESS = "保存密码提示问题成功";
 
         String IDENTITY_TYPE_ERROR = "授权类型有误";
+
+        String NOT_SUPPORT_FILE_TYPE = "不支持上传的文件类型";
+        String UPLOAD_ICON_FAIL = "上传头像失败";
     }
 }
