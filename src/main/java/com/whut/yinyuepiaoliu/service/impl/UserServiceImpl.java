@@ -59,8 +59,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     // 用户登录
-    public ServerResponse<UserBase> login(String identifier, String credential,int identity_type) {
-        switch(identity_type){
+    public ServerResponse<UserBase> login(String identifier, String credential, int identity_type) {
+        switch (identity_type) {
             // 如果是通过手机号登录
             case Const.Login_authorization.LOGIN_FROM_PHONE:
                 // 检查手机号是否已经注册
@@ -71,7 +71,7 @@ public class UserServiceImpl implements IUserService {
                 // 能到这里，说明手机号已经注册，接下来就是检查对应的密码是否正确
                 // 密码MD5加密
                 String md5Password = MD5Util.MD5EncodeUtf8(credential);
-                userAuthorize = userAuthorizeMapper.checkLogin(identifier,md5Password);
+                userAuthorize = userAuthorizeMapper.checkLogin(identifier, md5Password);
                 if (userAuthorize == null) {
                     return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_2, Const.Message.ERROR_PASSWORD); // 密码错误
                 }
@@ -141,19 +141,19 @@ public class UserServiceImpl implements IUserService {
         if (yzMessage.getRandomNumber().equals(code)) {
             return ServerResponse.createBySuccessMessage(Const.Message.CODE_SUCCESS);
         } else {
-            return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_2,Const.Message.CODE_ERROR);
+            return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_2, Const.Message.CODE_ERROR);
         }
     }
 
     // 用户注册
-    public ServerResponse<String> register(String phone,String password) {
+    public ServerResponse<String> register(String phone, String password) {
         int resultCount = userBaseMapper.checkPhone(phone);
-        if(resultCount > 0){
+        if (resultCount > 0) {
             return ServerResponse.createByErrorMessage(Const.Message.HAS_REGISTER);
         }
         userBase.setPhone(phone);
         // 设置默认信息
-        userBase.setNickname(Const.Default_info.DEFAULT_NICKNAME+phone);
+        userBase.setNickname(Const.Default_info.DEFAULT_NICKNAME + phone);
         userBase.setAvatar(Const.Default_info.DEFAULT_ICON);
         userBase.setMotto(Const.Default_info.DEFAULT_MOTTO);
         // 设置用户角色
@@ -239,7 +239,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     // 校验密码提示问题
-    public ServerResponse forgetCheckAnswer(String phone,List<PwdAnswer> pwdAnswerList) {
+    public ServerResponse forgetCheckAnswer(String phone, List<PwdAnswer> pwdAnswerList) {
         Map<Integer, Boolean> resultMap = Maps.newHashMap();
         Boolean flag = true;
         for (PwdAnswer pwdAnswer : pwdAnswerList) {
@@ -263,26 +263,54 @@ public class UserServiceImpl implements IUserService {
     }
 
     // 重置密码
-    public ServerResponse<String> forgetResetPassword(String phone, String passwordNew, String forgetToken) {
-        if (StringUtils.isBlank(forgetToken)) {
-            return ServerResponse.createByErrorMessage(Const.Message.NEED_TOKEN);
+    public ServerResponse<String> forgetResetPassword(String phone, String passwordNew, int type, String forgetToken) {
+        switch (type) {
+            // 通过密码提示问题重置密码
+            case Const.Reset_pwd_type.RESET_BY_QUESTION:
+                if (StringUtils.isBlank(forgetToken)) {
+                    return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_2, Const.Message.NEED_TOKEN);
+                }
+                ServerResponse<String> validResponse = this.checkRegister(phone);
+                if (validResponse.isSuccess()) { // 手机号尚未注册
+                    return validResponse;
+                }
+                String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX + phone);
+                if (StringUtils.isBlank(token)) {
+                    return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_3, Const.Message.TOKEN_EXPIRED);
+                }
+                if (StringUtils.equals(forgetToken, token)) {
+                    String md5Password = MD5Util.MD5EncodeUtf8(passwordNew);
+                    int resultCount = userAuthorizeMapper.updatePassword(phone, md5Password);
+                    if (resultCount > 0) {
+                        return ServerResponse.createBySuccessMessage(Const.Message.RESET_PASSWORD_SUCCESS);
+                    }
+                } else {
+                    return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_4, Const.Message.TOKEN_ERROR);
+                }
+                return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_5, Const.Message.RESET_PASSWORD_FAIL);
+            // 通过验证码重置密码
+            case Const.Reset_pwd_type.RESET_BY_CODE:
+                String md5Password = MD5Util.MD5EncodeUtf8(passwordNew);
+                int resultCount = userAuthorizeMapper.updatePassword(phone, md5Password);
+                if (resultCount > 0) {
+                    return ServerResponse.createBySuccessMessage(Const.Message.RESET_PASSWORD_SUCCESS);
+                }
+                return ServerResponse.createByErrorMessage(Const.Message.RESET_PASSWORD_FAIL);
+            default:
+                break;
         }
-        ServerResponse<String> validResponse = this.checkRegister(phone);
-        if (validResponse.isSuccess()) { // 手机号尚未注册
-            return validResponse;
+        return ServerResponse.createByErrorCodeMessage(Const.ErrorType.NOT_SUPPORT_TYPE, Const.Message.NOT_SUPPORT_TYPE);
+    }
+
+    public ServerResponse<String> resetPasswordAfterLogin(String phone, String passwordNew) {
+        String md5Password = MD5Util.MD5EncodeUtf8(passwordNew);
+        userAuthorize = userAuthorizeMapper.getPassword(phone);
+        if(userAuthorize.getCredential().equals(md5Password)){
+            return ServerResponse.createByErrorCodeMessage(Const.ErrorType.ERROR_2,Const.Message.NEW_PWD_EQUAL_OLD);
         }
-        String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX + phone);
-        if (StringUtils.isBlank(token)) {
-            return ServerResponse.createByErrorMessage(Const.Message.TOKEN_EXPIRED);
-        }
-        if (StringUtils.equals(forgetToken, token)) {
-            String md5Password = MD5Util.MD5EncodeUtf8(passwordNew);
-            int resultCount = userAuthorizeMapper.updatePassword(phone, md5Password);
-            if (resultCount > 0) {
-                return ServerResponse.createBySuccessMessage(Const.Message.RESET_PASSWORD_SUCCESS);
-            }
-        } else {
-            return ServerResponse.createByErrorMessage(Const.Message.TOKEN_ERROR);
+        int resultCount = userAuthorizeMapper.updatePassword(phone, md5Password);
+        if(resultCount > 0){
+            return ServerResponse.createBySuccessMessage(Const.Message.RESET_PASSWORD_SUCCESS);
         }
         return ServerResponse.createByErrorMessage(Const.Message.RESET_PASSWORD_FAIL);
     }

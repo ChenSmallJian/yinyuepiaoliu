@@ -16,6 +16,13 @@ public class Const {
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_asc", "price_desc");
     }
 
+    // 重置密码的类型：通过密码提示问题，通过验证码，通过登录
+    public interface Reset_pwd_type{
+        int RESET_BY_QUESTION = 0;
+        int RESET_BY_CODE = 1;
+        int RESET_BY_LOGIN = 2;
+    }
+
     // ftp服务器文件存储的目录
     public interface File_save_to {
         String SAVE_TO_ICON = "icon";
@@ -58,6 +65,10 @@ public class Const {
     // 返回的错误码类型
     public interface ErrorType {
         int ERROR_2 = 2;
+        int ERROR_3 = 3;
+        int ERROR_4 = 4;
+        int ERROR_5 = 5;
+        int NOT_SUPPORT_TYPE = 10;
     }
 
     public enum ProductStatusEnum {
@@ -211,6 +222,10 @@ public class Const {
         String IDENTITY_TYPE_ERROR = "授权类型有误";
 
         String NOT_SUPPORT_FILE_TYPE = "不支持上传的文件类型";
+        String NOT_SUPPORT_TYPE = "不支持的类型";
+
         String UPLOAD_ICON_FAIL = "上传头像失败";
+
+        String NEW_PWD_EQUAL_OLD = "新旧密码不能相同";
     }
 }

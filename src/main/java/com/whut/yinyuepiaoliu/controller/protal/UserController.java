@@ -219,13 +219,31 @@ public class UserController {
      *
      * @param phone
      * @param passwordNew
+     * @param type
      * @param forgetToken
      * @return
      */
     @RequestMapping(value = "forget_reset_password.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> forgetResetPassword(String phone, String passwordNew, String forgetToken) {
-        return iUserService.forgetResetPassword(phone, passwordNew, forgetToken);
+    public ServerResponse<String> forgetResetPassword(String phone, String passwordNew, int type, String forgetToken) {
+        return iUserService.forgetResetPassword(phone, passwordNew, type, forgetToken);
+    }
+
+    /**
+     * 登录后修改密码
+     *
+     * @param passwordNew
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "reset_password_after_login.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> resetPasswordAfterLogin(String passwordNew, HttpSession session) {
+        userBase = (UserBase) session.getAttribute(Const.CURRENT_USER);
+        if (userBase == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iUserService.resetPasswordAfterLogin(userBase.getPhone(), passwordNew);
     }
 
     /**

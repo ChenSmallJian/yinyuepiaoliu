@@ -128,4 +128,11 @@
     SET credential = #{newPassword},update_time = now()
     WHERE identifier = #{phone}
   </update>
+  <!--获取密码-->
+  <select id="getPassword" resultMap="BaseResultMap" parameterType="string">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM yypl_user_authorize
+    WHERE identifier = #{phone}
+  </select>
 </mapper>

@@ -21,5 +21,9 @@ public interface UserAuthorizeMapper {
     // 检查密码是否正确，正确则返回用户的信息
     UserAuthorize checkLogin(@Param("identifier") String identifier, @Param("credential")String credential);
 
+    // 修改密码
     int updatePassword(@Param("phone")String phone, @Param("newPassword")String newPassword);
+
+    // 获取密码
+    UserAuthorize getPassword(@Param("phone")String phone);
 }

@@ -12,9 +12,9 @@ import java.util.List;
 public interface IUserService {
     ServerResponse<String> checkRegister(String phone);
 
-    ServerResponse<UserBase> login(String identifier, String credential,int identity_type);
+    ServerResponse<UserBase> login(String identifier, String credential, int identity_type);
 
-    ServerResponse<String> getVerificationCode(String phone,int type, HttpSession session);
+    ServerResponse<String> getVerificationCode(String phone, int type, HttpSession session);
 
     ServerResponse<String> checkVerificationCode(String code, HttpSession session);
 
@@ -22,9 +22,11 @@ public interface IUserService {
 
     ServerResponse forgetGetQuestion(String phone);
 
-    ServerResponse forgetCheckAnswer(String phone,List<PwdAnswer> pwdAnswerList);
+    ServerResponse forgetCheckAnswer(String phone, List<PwdAnswer> pwdAnswerList);
 
-    ServerResponse<String> forgetResetPassword(String phone, String passwordNew, String forgetToken);
+    ServerResponse<String> forgetResetPassword(String phone, String passwordNew, int type, String forgetToken);
+
+    ServerResponse<String> resetPasswordAfterLogin(String phone, String passwordNew);
 
     ServerResponse<UserBase> updateUserInformation(UserBase userBaseUpdate);
 
