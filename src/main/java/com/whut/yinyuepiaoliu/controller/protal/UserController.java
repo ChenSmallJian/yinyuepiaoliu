@@ -303,12 +303,13 @@ public class UserController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         // 确保用户已经登录
-        String type = Const.File_save_to.SAVE_TO_ICON;
+        String folder = Const.File_save_to.SAVE_TO_ICON;
         String path = request.getSession().getServletContext().getRealPath("upload");
-        String FileTargetName = iFileService.upload(file, path, type);
+        System.out.println(path);
+        String FileTargetName = iFileService.upload(file, path, folder);
         String url = null;
         if (FileTargetName != null) {
-            url = PropertiesUtil.getProperty("ftp.server.http.prefix") + type + "/" + FileTargetName;
+            url = PropertiesUtil.getProperty("ftp.server.http.prefix") + folder + "/" + FileTargetName;
             // 获取用户原来的头像地址
             String oldIcon = userBase.getAvatar();
             // 将头像信息更新到用户信息中

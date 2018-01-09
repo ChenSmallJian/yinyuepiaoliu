@@ -16,6 +16,10 @@ public class Const {
         Set<String> PRICE_ASC_DESC = Sets.newHashSet("price_asc", "price_desc");
     }
 
+    public interface StatusCode{
+        int OK = 200;
+    }
+
     // 重置密码的类型：通过密码提示问题，通过验证码，通过登录
     public interface Reset_pwd_type{
         int RESET_BY_QUESTION = 0;
@@ -26,6 +30,7 @@ public class Const {
     // ftp服务器文件存储的目录
     public interface File_save_to {
         String SAVE_TO_ICON = "icon";
+        String SAVE_TO_MUSIC = "music";
     }
 
     // 登录时的授权类型：手机，qq，微信，微博，百度
@@ -227,5 +232,7 @@ public class Const {
         String UPLOAD_ICON_FAIL = "上传头像失败";
 
         String NEW_PWD_EQUAL_OLD = "新旧密码不能相同";
+        String REQUEST_FAIL = "请求失败";
+        String REQUEST_SUCCESS = "请求成功";
     }
 }

@@ -252,13 +252,19 @@
             <version>2.9.0</version>
         </dependency>
 
-        <!--alimessage-->
+        <!--ali message-->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
             <version>3.3.1</version>
         </dependency>
 
+        <!--HttpClient-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.4</version>
+        </dependency>
 
     </dependencies>
     <build>
