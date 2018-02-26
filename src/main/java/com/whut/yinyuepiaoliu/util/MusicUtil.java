@@ -14,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -22,6 +23,7 @@ import java.text.MessageFormat;
 import java.util.Map;
 import java.util.UUID;
 
+@Component(value = "musicUtil")
 public class MusicUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(MusicUtil.class);
@@ -32,24 +34,21 @@ public class MusicUtil {
     // 从酷我音乐API获取音乐信息
     private String searchAPIFromKUWO = "http://search.kuwo.cn/r.s?all={0}&ft=music&itemset=web_2013&client=kt&pn={1}&rn={2}&rformat=json&encoding=utf8";
 
-    public ServerResponse searchMusicFromKUWO(String key, int page, int pageCount) {
+    public String searchMusicFromKUWO(String key, int page, int pageCount) {
         // 拼接搜索音乐的url
         String searchURL = MessageFormat.format(searchAPIFromKUWO, key, page, pageCount);
         ServerResponse response = this.get(searchURL);
         if (response.isSuccess()) {
-            //                    String d =  EntityUtils.toString(entity);
-//                    String dd = d.replaceAll("\'","\"");
-//                    String ddd = dd.replaceAll("\'\'","\"\"");
-//                    System.out.println(ddd);
-            System.out.println(response.getData());
-            return response;
+            String data = response.getData().toString().replaceAll("\'", "\"").replaceAll("\'\'", "\"\"");
+            logger.info(data);
+            return data;
         }
         return null;
     }
 
     // 从酷我音乐API获取音乐信息
-    public ServerResponse searchMusicFromKUWO(String key) {
-        return this.searchMusicFromKUWO(key, defaultPage, defaultPageCount);
+    public String searchMusicFromKUWO(String key, int page) {
+        return this.searchMusicFromKUWO(key, page, defaultPageCount);
     }
 
     /**
@@ -74,6 +73,7 @@ public class MusicUtil {
 
     // 这个留做备用
     private String downloadFromKUWO = "http://antiserver.kuwo.cn/anti.s?type=convert_url&rid={0}&format=aac&response=url";
+
     public Map downloadFromKUWO(String MusicId, String path) {
         File fileDir = new File(path);
         if (!fileDir.exists()) {
@@ -122,7 +122,9 @@ public class MusicUtil {
         String playURL = MessageFormat.format(getPlayAndDownloadFromKUWO, musicId);
         ServerResponse response = this.get(playURL);
         if (response.isSuccess()) {
+            String xml = response.getData().toString();
             System.out.println(response.getData());
+            // ReadXML.readStringXml(xml);
             return response;
         }
         return null;
@@ -234,9 +236,9 @@ public class MusicUtil {
 //        String searchURL = MessageFormat.format(searchAPI, "周杰伦", defaultPage, defaultPageCount);
 //        System.out.println(searchURL);
 
-        //   searchMusicFromKUWO("青花瓷");
+        //searchMusicFromKUWO("青44");
 
-         //getPlayUrlFromKUWO("MUSIC_3327328");
+        //getPlayUrlFromKUWO("MUSIC_3327328");
 
         //getPlayAndDownloadFromKUWO("MUSIC_3327328");
 
